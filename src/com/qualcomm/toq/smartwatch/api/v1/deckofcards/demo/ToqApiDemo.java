@@ -801,23 +801,57 @@ public class ToqApiDemo extends Activity{
 //              JSONObject jsonObject = jsonArray.getJSONObject(i);
 //              Log.i(ToqApiDemo.class.getName(), jsonObject.getString("text"));
 //            }
+        NotificationTextCard notificationCard = null;
 
-        String startName = jsonObj.getJSONObject("trip").getJSONObject("start_location").getString("name");
-        String endName = jsonObj.getJSONObject("trip").getJSONObject("end_location").getString("name");
-        long time = jsonObj.getJSONObject("trip").getLong("start_time");
-        Double distance = jsonObj.getJSONObject("trip").getDouble("distance_m");
-      
-        // Create notification text card from UI values
-        NotificationTextCard notificationCard= new NotificationTextCard(System.currentTimeMillis(), 
-                ((EditText)findViewById(R.id.notification_title_text)).getText().toString(), 
-                splitString(((EditText)findViewById(R.id.notification_message_text)).getText().toString())); 
+        String type = jsonObj.getString("type");
         
-        notificationCard.setInfoText(((EditText)findViewById(R.id.notification_info_text)).getText().toString());
-        notificationCard.setReceivingEvents(((CheckBox)findViewById(R.id.notification_events_checkbox)).isChecked());
-        notificationCard.setMenuOptions(splitString(((EditText)findViewById(R.id.notification_menu_options_text)).getText().toString()));
-        notificationCard.setShowDivider(((CheckBox)findViewById(R.id.notification_divider_checkbox)).isChecked());
-        notificationCard.setVibeAlert(((CheckBox)findViewById(R.id.notification_vibe_checkbox)).isChecked());
+        if (type.equals("notification:hard_accel")) {
+            String vehicle = jsonObj.getJSONObject("vehicle").getString("display_name");
+            notificationCard = new NotificationTextCard(System.currentTimeMillis(), 
+                    "A: Hard Acceleration", 
+                    splitString("Car: "+vehicle)); 
+        } else if (type.equals("notification:hard_accel")) {
+            String vehicle = jsonObj.getJSONObject("vehicle").getString("display_name");
+            notificationCard = new NotificationTextCard(System.currentTimeMillis(), 
+                    "A: Hard Acceleration", 
+                    splitString("Car: "+vehicle)); 
+        } else if (type.equals("notification:speeding")) {
+        	
+            String vehicle = jsonObj.getJSONObject("vehicle").getString("display_name");
+            Long speed = jsonObj.getLong("speed_mph");
 
+        	notificationCard = new NotificationTextCard(System.currentTimeMillis(), 
+                    "A: Speeding",
+                    splitString("Car: "+vehicle+"\nSpeed: "+speed+" mph")); 
+        } else if (type.equals("notification:hard_brake")) {
+            String vehicle = jsonObj.getJSONObject("vehicle").getString("display_name");
+            notificationCard = new NotificationTextCard(System.currentTimeMillis(), 
+                    "A: Hard Brake", 
+                    splitString("Car: "+vehicle)); 
+        } else if (type.equals("trip:finished")) {
+            String vehicle = jsonObj.getJSONObject("vehicle").getString("display_name");
+            String startName = jsonObj.getJSONObject("trip").getJSONObject("start_location").getString("name");
+            String endName = jsonObj.getJSONObject("trip").getJSONObject("end_location").getString("name");
+//            long time = jsonObj.getJSONObject("trip").getLong("start_time");
+//            Double distance = jsonObj.getJSONObject("trip").getDouble("distance_m");
+
+            notificationCard = new NotificationTextCard(System.currentTimeMillis(), 
+                    "A: Trip Finished", 
+                    splitString("Car: "+vehicle+"\nFrom: "+startName+"\nTo: "+endName)); 
+            
+        	
+        } else if (type.equals("mil:on")) {
+            String vehicle = jsonObj.getJSONObject("vehicle").getString("display_name");
+            notificationCard = new NotificationTextCard(System.currentTimeMillis(), 
+                    "A: Engine Failure", 
+                    splitString("Car: "+vehicle+"\nSmall fuel vapor leak in EVAP system")); 
+        }
+
+//        notificationCard.setInfoText("abcd");
+        notificationCard.setVibeAlert(true);
+        notificationCard.setShowDivider(true);
+        notificationCard.setReceivingEvents(false);
+//        notificationCard.setMenuOptions(splitString(((EditText)findViewById(R.id.notification_menu_options_text)).getText().toString()));
         RemoteToqNotification notification= new RemoteToqNotification(this, notificationCard);
 
         try{            
