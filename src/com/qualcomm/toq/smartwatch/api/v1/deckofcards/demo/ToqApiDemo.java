@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -329,6 +330,18 @@ public class ToqApiDemo extends Activity{
             runOnUiThread(new Runnable(){
                 public void run(){
                     Toast.makeText(ToqApiDemo.this, getString(R.string.event_menu_option_selected) + cardId + " [" + menuOption +"]", Toast.LENGTH_SHORT).show();
+                    String url = "https://www.youtube.com/watch?v=vqjGEb4QtYg";
+                    if (menuOption.equals("Adele - Rolling in the Deep")) {
+                    	url = "https://www.youtube.com/watch?v=vqjGEb4QtYg";
+                    } else if (menuOption.equals("Enya - Oricono Flow")) {
+                    	url = "https://www.youtube.com/watch?v=LTrk4X9ACtw";
+                    } else if (menuOption.equals("AC/DC - Back in Black")) {
+                    	url = "https://www.youtube.com/watch?v=pAgnJDJN4VA";
+                    }
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    intent.putExtra("force_fullscreen",true); 
+                    startActivity(intent);
+                    
                 }
             });
         }
@@ -608,29 +621,29 @@ public class ToqApiDemo extends Activity{
         simpleTextCard.setShowDivider(true);
         listCard.add(simpleTextCard);
         
-        // Card 2
-        simpleTextCard= new SimpleTextCard("card2", "Header 2", System.currentTimeMillis(), "Title 2", new String[]{"Card 2: line 1", "Card 2: line 2", "Card 2: line 3"});
-        simpleTextCard.setInfoText("20");
-        simpleTextCard.setReceivingEvents(true);
-        simpleTextCard.setMenuOptions(new String[]{"111", "222", "333"});
-        simpleTextCard.setShowDivider(false);
-        listCard.add(simpleTextCard);
-
-        // Card 3
-        simpleTextCard= new SimpleTextCard("card3", "Header 3", System.currentTimeMillis(), "Title 3", new String[]{"Card 3: line 1", "Card 3: line 2", "Card 3: line 3"});
-        simpleTextCard.setInfoText("30");
-        simpleTextCard.setReceivingEvents(false);
-        simpleTextCard.setMenuOptions(new String[]{"xxx", "yyy", "zzz"});
-        simpleTextCard.setShowDivider(true);
-        listCard.add(simpleTextCard);
-        
-        // Card 3
-        simpleTextCard= new SimpleTextCard("card4", "Header 4", System.currentTimeMillis(), "Title 3", new String[]{"Card 3: line 1", "Card 3: line 2", "Card 3: line 3"});
-        simpleTextCard.setInfoText("30");
-        simpleTextCard.setReceivingEvents(false);
-        simpleTextCard.setMenuOptions(new String[]{"xxx", "yyy", "zzz"});
-        simpleTextCard.setShowDivider(true);
-        listCard.add(simpleTextCard);
+//        // Card 2
+//        simpleTextCard= new SimpleTextCard("card2", "Header 2", System.currentTimeMillis(), "Title 2", new String[]{"Card 2: line 1", "Card 2: line 2", "Card 2: line 3"});
+//        simpleTextCard.setInfoText("20");
+//        simpleTextCard.setReceivingEvents(true);
+//        simpleTextCard.setMenuOptions(new String[]{"111", "222", "333"});
+//        simpleTextCard.setShowDivider(false);
+//        listCard.add(simpleTextCard);
+//
+//        // Card 3
+//        simpleTextCard= new SimpleTextCard("card3", "Header 3", System.currentTimeMillis(), "Title 3", new String[]{"Card 3: line 1", "Card 3: line 2", "Card 3: line 3"});
+//        simpleTextCard.setInfoText("30");
+//        simpleTextCard.setReceivingEvents(false);
+//        simpleTextCard.setMenuOptions(new String[]{"xxx", "yyy", "zzz"});
+//        simpleTextCard.setShowDivider(true);
+//        listCard.add(simpleTextCard);
+//        
+//        // Card 3
+//        simpleTextCard= new SimpleTextCard("card4", "Header 4", System.currentTimeMillis(), "Title 3", new String[]{"Card 3: line 1", "Card 3: line 2", "Card 3: line 3"});
+//        simpleTextCard.setInfoText("30");
+//        simpleTextCard.setReceivingEvents(false);
+//        simpleTextCard.setMenuOptions(new String[]{"xxx", "yyy", "zzz"});
+//        simpleTextCard.setShowDivider(true);
+//        listCard.add(simpleTextCard);
 
         return new RemoteDeckOfCards(this, listCard);  
     }
@@ -657,6 +670,7 @@ public class ToqApiDemo extends Activity{
         updateDeckOfCardsButton= (Button)findViewById(R.id.doc_update_button);
         updateDeckOfCardsButton.setOnClickListener(new OnClickListener(){
             public void onClick(View v){            
+                sendNotification();
                 updateDeckOfCards();
             }
         });
@@ -668,51 +682,51 @@ public class ToqApiDemo extends Activity{
             }
         });
         
-        sendNotificationButton= (Button)findViewById(R.id.send_notification_button);
-        sendNotificationButton.setOnClickListener(new OnClickListener(){
-            public void onClick(View v){            
-                sendNotification();
-            }
-        });
+//        sendNotificationButton= (Button)findViewById(R.id.send_notification_button);
+//        sendNotificationButton.setOnClickListener(new OnClickListener(){
+//            public void onClick(View v){            
+//                sendNotification();
+//            }
+//        });
         
         // Deck of cards
         ListCard listCard= deckOfCards.getListCard();
         
-        SimpleTextCard simpleTextCard= (SimpleTextCard)listCard.childAtIndex(0);        
-        ((EditText)findViewById(R.id.doc1_header_text)).setText(simpleTextCard.getHeaderText());
-        ((EditText)findViewById(R.id.doc1_title_text)).setText(simpleTextCard.getTitleText());
-        ((EditText)findViewById(R.id.doc1_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
-        ((EditText)findViewById(R.id.doc1_info_text)).setText(simpleTextCard.getInfoText());
-        ((CheckBox)findViewById(R.id.doc1_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
-        ((EditText)findViewById(R.id.doc1_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
-        ((CheckBox)findViewById(R.id.doc1_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
+//        SimpleTextCard simpleTextCard= (SimpleTextCard)listCard.childAtIndex(0);        
+//        ((EditText)findViewById(R.id.doc1_header_text)).setText(simpleTextCard.getTitleText());
+//        ((EditText)findViewById(R.id.doc1_title_text)).setText(simpleTextCard.getTitleText());
+//        ((EditText)findViewById(R.id.doc1_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
+//        ((EditText)findViewById(R.id.doc1_info_text)).setText(simpleTextCard.getInfoText());
+//        ((CheckBox)findViewById(R.id.doc1_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
+//        ((EditText)findViewById(R.id.doc1_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
+//        ((CheckBox)findViewById(R.id.doc1_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
 
-        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(1);        
-        ((EditText)findViewById(R.id.doc2_header_text)).setText(simpleTextCard.getHeaderText());
-        ((EditText)findViewById(R.id.doc2_title_text)).setText(simpleTextCard.getTitleText());
-        ((EditText)findViewById(R.id.doc2_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
-        ((EditText)findViewById(R.id.doc2_info_text)).setText(simpleTextCard.getInfoText());
-        ((CheckBox)findViewById(R.id.doc2_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
-        ((EditText)findViewById(R.id.doc2_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
-        ((CheckBox)findViewById(R.id.doc2_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
+//        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(1);        
+//        ((EditText)findViewById(R.id.doc2_header_text)).setText(simpleTextCard.getHeaderText());
+//        ((EditText)findViewById(R.id.doc2_title_text)).setText(simpleTextCard.getTitleText());
+//        ((EditText)findViewById(R.id.doc2_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
+//        ((EditText)findViewById(R.id.doc2_info_text)).setText(simpleTextCard.getInfoText());
+//        ((CheckBox)findViewById(R.id.doc2_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
+//        ((EditText)findViewById(R.id.doc2_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
+//        ((CheckBox)findViewById(R.id.doc2_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
 
-        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(2);        
-        ((EditText)findViewById(R.id.doc3_header_text)).setText(simpleTextCard.getHeaderText());
-        ((EditText)findViewById(R.id.doc3_title_text)).setText(simpleTextCard.getTitleText());
-        ((EditText)findViewById(R.id.doc3_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
-        ((EditText)findViewById(R.id.doc3_info_text)).setText(simpleTextCard.getInfoText());
-        ((CheckBox)findViewById(R.id.doc3_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
-        ((EditText)findViewById(R.id.doc3_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
-        ((CheckBox)findViewById(R.id.doc3_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
+//        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(2);        
+//        ((EditText)findViewById(R.id.doc3_header_text)).setText(simpleTextCard.getHeaderText());
+//        ((EditText)findViewById(R.id.doc3_title_text)).setText(simpleTextCard.getTitleText());
+//        ((EditText)findViewById(R.id.doc3_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
+//        ((EditText)findViewById(R.id.doc3_info_text)).setText(simpleTextCard.getInfoText());
+//        ((CheckBox)findViewById(R.id.doc3_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
+//        ((EditText)findViewById(R.id.doc3_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
+//        ((CheckBox)findViewById(R.id.doc3_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
 
         // Notification
-        ((EditText)findViewById(R.id.notification_title_text)).setText("Title");
-        ((EditText)findViewById(R.id.notification_message_text)).setText(concatStrings(new String[]{"Line 1", "Line 2", "Line 3"}));
-        ((EditText)findViewById(R.id.notification_info_text)).setText("99");
-        ((CheckBox)findViewById(R.id.notification_events_checkbox)).setChecked(true);
-        ((EditText)findViewById(R.id.notification_menu_options_text)).setText(concatStrings(new String[]{"opt1", "opt2", "opt3"}));
-        ((CheckBox)findViewById(R.id.notification_divider_checkbox)).setChecked(true);
-        ((CheckBox)findViewById(R.id.notification_vibe_checkbox)).setChecked(true);
+//        ((EditText)findViewById(R.id.notification_title_text)).setText("Title");
+//        ((EditText)findViewById(R.id.notification_message_text)).setText(concatStrings(new String[]{"Line 1", "Line 2", "Line 3"}));
+//        ((EditText)findViewById(R.id.notification_info_text)).setText("99");
+//        ((CheckBox)findViewById(R.id.notification_events_checkbox)).setChecked(true);
+//        ((EditText)findViewById(R.id.notification_menu_options_text)).setText(concatStrings(new String[]{"opt1", "opt2", "opt3"}));
+//        ((CheckBox)findViewById(R.id.notification_divider_checkbox)).setChecked(true);
+//        ((CheckBox)findViewById(R.id.notification_vibe_checkbox)).setChecked(true);
 
         // Status
         statusTextView= (TextView)findViewById(R.id.status_text);
@@ -795,12 +809,6 @@ public class ToqApiDemo extends Activity{
     	JSONObject jsonObj;
         try {
         	jsonObj = new JSONObject(readAutomaticFeed);
-//            Log.i(ToqApiDemo.class.getName(),
-//                "Number of entries " + jsonArray.length());
-//            for (int i = 0; i < jsonArray.length(); i++) {
-//              JSONObject jsonObject = jsonArray.getJSONObject(i);
-//              Log.i(ToqApiDemo.class.getName(), jsonObject.getString("text"));
-//            }
         NotificationTextCard notificationCard = null;
 
         String type = jsonObj.getString("type");
@@ -808,12 +816,7 @@ public class ToqApiDemo extends Activity{
         if (type.equals("notification:hard_accel")) {
             String vehicle = jsonObj.getJSONObject("vehicle").getString("display_name");
             notificationCard = new NotificationTextCard(System.currentTimeMillis(), 
-                    "A: Hard Acceleration", 
-                    splitString("Car: "+vehicle)); 
-        } else if (type.equals("notification:hard_accel")) {
-            String vehicle = jsonObj.getJSONObject("vehicle").getString("display_name");
-            notificationCard = new NotificationTextCard(System.currentTimeMillis(), 
-                    "A: Hard Acceleration", 
+                    "Hard Acceleration", 
                     splitString("Car: "+vehicle)); 
         } else if (type.equals("notification:speeding")) {
         	
@@ -821,12 +824,12 @@ public class ToqApiDemo extends Activity{
             Long speed = jsonObj.getLong("speed_mph");
 
         	notificationCard = new NotificationTextCard(System.currentTimeMillis(), 
-                    "A: Speeding",
+                    "Speeding",
                     splitString("Car: "+vehicle+"\nSpeed: "+speed+" mph")); 
         } else if (type.equals("notification:hard_brake")) {
             String vehicle = jsonObj.getJSONObject("vehicle").getString("display_name");
             notificationCard = new NotificationTextCard(System.currentTimeMillis(), 
-                    "A: Hard Brake", 
+                    "Hard Brake", 
                     splitString("Car: "+vehicle)); 
         } else if (type.equals("trip:finished")) {
             String vehicle = jsonObj.getJSONObject("vehicle").getString("display_name");
@@ -836,14 +839,14 @@ public class ToqApiDemo extends Activity{
 //            Double distance = jsonObj.getJSONObject("trip").getDouble("distance_m");
 
             notificationCard = new NotificationTextCard(System.currentTimeMillis(), 
-                    "A: Trip Finished", 
+                    "Trip Finished", 
                     splitString("Car: "+vehicle+"\nFrom: "+startName+"\nTo: "+endName)); 
             
         	
         } else if (type.equals("mil:on")) {
             String vehicle = jsonObj.getJSONObject("vehicle").getString("display_name");
             notificationCard = new NotificationTextCard(System.currentTimeMillis(), 
-                    "A: Engine Failure", 
+                    "Engine Failure", 
                     splitString("Car: "+vehicle+"\nSmall fuel vapor leak in EVAP system")); 
         }
 
@@ -902,6 +905,73 @@ public class ToqApiDemo extends Activity{
     }
     
     
+    private void updateAutomaticTextCard(SimpleTextCard simpleTextCard, JSONObject jsonObj) {
+        try {
+        String type = jsonObj.getString("type");
+        String vehicle = jsonObj.getJSONObject("vehicle").getString("display_name");
+        
+        if (type.equals("notification:hard_accel")) {
+            simpleTextCard.setHeaderText("Hard Acceleration");
+            simpleTextCard.setTitleText("Car: "+vehicle);
+            simpleTextCard.setMessageText(splitString(""));
+        } else if (type.equals("notification:speeding")) {
+            simpleTextCard.setHeaderText("Speeding");
+            simpleTextCard.setTitleText("Car: "+vehicle);
+            Long speed = jsonObj.getLong("speed_mph");
+            simpleTextCard.setMessageText(splitString("Speed: "+speed+" mph"));
+        } else if (type.equals("notification:hard_brake")) {
+            simpleTextCard.setHeaderText("Hard Brake");
+            simpleTextCard.setTitleText("Car: "+vehicle);
+            simpleTextCard.setMessageText(splitString(""));
+        	
+        } else if (type.equals("trip:finished")) {
+//            String vehicle = jsonObj.getJSONObject("vehicle").getString("display_name");
+            String startName = jsonObj.getJSONObject("trip").getJSONObject("start_location").getString("name");
+            String endName = jsonObj.getJSONObject("trip").getJSONObject("end_location").getString("name");
+            long starttime = jsonObj.getJSONObject("trip").getLong("start_time");
+            long endtime = jsonObj.getJSONObject("trip").getLong("end_time");
+//            Double distance = jsonObj.getJSONObject("trip").getDouble("distance_m");
+            simpleTextCard.setHeaderText("Trip Report");
+            simpleTextCard.setTitleText("Car: "+vehicle);
+            simpleTextCard.setMessageText(splitString("From: "+startName+"\nTo: "+endName));
+        } else if (type.equals("mil:on")) {
+            simpleTextCard.setHeaderText("Engine Failure");
+            simpleTextCard.setTitleText("Car: "+vehicle);
+            simpleTextCard.setMessageText(splitString("Small fuel vapor leak in EVAP system"));
+        }
+        
+        simpleTextCard.setInfoText("");
+        simpleTextCard.setReceivingEvents(false);
+        simpleTextCard.setShowDivider(true);
+        simpleTextCard.setTimeMillis(jsonObj.getLong("created_at"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void updateEmotivTextCard(SimpleTextCard simpleTextCard, JSONObject jsonEmotiv) {
+        try {
+            simpleTextCard.setHeaderText("Emotiv Mood");
+            String mood = jsonEmotiv.getString("mood");
+            simpleTextCard.setTitleText("Mood: "+mood);
+            simpleTextCard.setMessageText(splitString(""));
+            simpleTextCard.setInfoText("");
+            simpleTextCard.setReceivingEvents(true);
+            simpleTextCard.setShowDivider(true);
+            if (mood.equals("meditation")) {
+                simpleTextCard.setMenuOptions(splitString("Enya - Oricono Flow"));
+            } else if (mood.equals("frustrated")) {
+                simpleTextCard.setMenuOptions(splitString("AC/DC - Back in Black"));
+            } else {
+                simpleTextCard.setMenuOptions(splitString("Adele Rolling in the Deep"));
+            }
+            simpleTextCard.setTimeMillis(jsonEmotiv.getLong("created_at"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
     // Parse the UI to update the deck of cards contents
     private void updateDeckOfCardsFromUI(){
 
@@ -910,8 +980,10 @@ public class ToqApiDemo extends Activity{
     	String readAutomaticFeed = readJson("https://trackingprozz.herokuapp.com/logs/reverse");
     	String readMood = readJson("https://trackingprozz.herokuapp.com/emotiv");
     	JSONArray jsonArray;
+    	JSONObject jsonEmotiv;
         try {
             jsonArray = new JSONArray(readAutomaticFeed);
+            jsonEmotiv = new JSONObject(readMood);
             Log.i(ToqApiDemo.class.getName(),
                 "Number of entries " + jsonArray.length());
 //            for (int i = 0; i < jsonArray.length(); i++) {
@@ -919,92 +991,26 @@ public class ToqApiDemo extends Activity{
 //              Log.i(ToqApiDemo.class.getName(), jsonObject.getString("text"));
 //            }
 
-       
-        JSONObject obj1 = jsonArray.getJSONObject(0);
-        String startName = obj1.getJSONObject("trip").getJSONObject("start_location").getString("name");
-        String endName = obj1.getJSONObject("trip").getJSONObject("end_location").getString("name");
-        long time = obj1.getJSONObject("trip").getLong("start_time");
-        Double distance = obj1.getJSONObject("trip").getDouble("distance_m");
-        // Card 1
-        SimpleTextCard simpleTextCard= (SimpleTextCard)listCard.childAtIndex(0);        
-        simpleTextCard.setHeaderText("Trip 1");
-        simpleTextCard.setTitleText("Dist: ".concat(distance.toString()) );
-        simpleTextCard.setMessageText(new String[]{startName, endName});
-        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc1_info_text)).getText().toString());
-        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc1_events_checkbox)).isChecked());
-        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc1_divider_checkbox)).isChecked());
-        simpleTextCard.setTimeMillis(time);
+        // Update Emotiv Card
+        SimpleTextCard simpleTextCard= (SimpleTextCard)listCard.childAtIndex(0);
         
-        if (((EditText)findViewById(R.id.doc1_menu_options_text)).getText().length() == 0){
-            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
+        updateEmotivTextCard(simpleTextCard, jsonEmotiv);
+
+        // Update Automatic Cards
+        for (int i=0; i<3; i++) {
+            JSONObject automaticEvent = jsonArray.getJSONObject(i);
+            if (automaticEvent != null) {
+            	SimpleTextCard simpleTextCard2;
+            	try {
+                	simpleTextCard2 = (SimpleTextCard)listCard.childAtIndex(i+1);
+            	} catch (IndexOutOfBoundsException e) {
+                	simpleTextCard2 = new SimpleTextCard("Card"+(i+1), "", System.currentTimeMillis(), "", splitString(""));
+                    listCard.add(simpleTextCard2);
+            	}
+                updateAutomaticTextCard(simpleTextCard2, automaticEvent);
+            }
         }
-        else{
-            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc1_menu_options_text)).getText().toString()));
-        }     
               
-        JSONObject obj2 = jsonArray.getJSONObject(1);
-        String startName2 = obj2.getJSONObject("trip").getJSONObject("start_location").getString("name");
-        String endName2 = obj2.getJSONObject("trip").getJSONObject("end_location").getString("name");
-        long time2 = obj2.getJSONObject("trip").getLong("start_time");
-        Double distance2 = obj2.getJSONObject("trip").getDouble("distance_m");
-        // Card 2
-        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(1);        
-        simpleTextCard.setHeaderText("Trip 2");
-        simpleTextCard.setTitleText("Dist: ".concat(distance2.toString()));
-        simpleTextCard.setMessageText(new String[]{startName2, endName2});
-        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc2_info_text)).getText().toString());
-        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc2_events_checkbox)).isChecked());
-        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc2_divider_checkbox)).isChecked());
-        simpleTextCard.setTimeMillis(time2);
-        
-        if (((EditText)findViewById(R.id.doc2_menu_options_text)).getText().length() == 0){
-            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
-        }
-        else{
-            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc2_menu_options_text)).getText().toString()));
-        }
-        
-        JSONObject obj3 = jsonArray.getJSONObject(2);
-        String startName3 = obj3.getJSONObject("trip").getJSONObject("start_location").getString("name");
-        String endName3 = obj3.getJSONObject("trip").getJSONObject("end_location").getString("name");
-        long time3 = obj3.getJSONObject("trip").getInt("start_time");
-        Double distance3 = obj3.getJSONObject("trip").getDouble("distance_m");
-        
-        // Card 3
-        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(2);        
-        simpleTextCard.setHeaderText("Trip 3");
-        simpleTextCard.setTitleText("Dist: ".concat(distance3.toString()));
-        simpleTextCard.setMessageText(new String[]{startName3, endName3});
-        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc3_info_text)).getText().toString());
-        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc3_events_checkbox)).isChecked());
-        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc3_divider_checkbox)).isChecked());
-        simpleTextCard.setTimeMillis(time3);
-        
-        if (((EditText)findViewById(R.id.doc3_menu_options_text)).getText().length() == 0){
-            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
-        }
-        else{
-            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc3_menu_options_text)).getText().toString()));
-        } 
-        
-        //Card 4
-        
-        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(3);        
-        simpleTextCard.setHeaderText("Trip 3");
-        simpleTextCard.setTitleText("Dist: ".concat(distance3.toString()));
-        simpleTextCard.setMessageText(new String[]{startName3, endName3});
-        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc3_info_text)).getText().toString());
-        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc3_events_checkbox)).isChecked());
-        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc3_divider_checkbox)).isChecked());
-        simpleTextCard.setTimeMillis(time3);
-        
-        if (((EditText)findViewById(R.id.doc3_menu_options_text)).getText().length() == 0){
-            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
-        }
-        else{
-            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc3_menu_options_text)).getText().toString()));
-        } 
-        
         } catch (Exception e) {
             e.printStackTrace();
           }

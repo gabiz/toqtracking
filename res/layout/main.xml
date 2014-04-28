@@ -32,18 +32,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" > 
                 
-                <TextView
+<!--                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"                    
                     android:text="@string/doc_card1_text"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-                
+ -->                
                 <TableLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent">
                     
-                    <TableRow
+<!--                     <TableRow
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent">
 
@@ -62,8 +62,8 @@
                             android:inputType="text"/>
                     
                     </TableRow>
-                
-                    <TableRow
+ -->                
+<!--                     <TableRow
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent">
                     
@@ -188,7 +188,7 @@
                             android:layout_marginBottom="3dp"/>
 
                     </TableRow>
-                    
+ -->                    
                 </TableLayout>
                 
                 <View
@@ -200,7 +200,7 @@
                     android:layout_marginBottom="5dp"                
                     android:layout_height="1dp" />
 
-                <TextView
+<!--                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/doc_card2_text"
@@ -526,7 +526,7 @@
                     </TableRow>
                     
                 </TableLayout>
-                
+ -->                
                 <LinearLayout
                     android:layout_width="340dp"
                     android:layout_height="wrap_content"
@@ -586,7 +586,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >        
 
-                <TableLayout
+<!--                 <TableLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent">
                     
@@ -737,8 +737,8 @@
                     </TableRow>
                     
                 </TableLayout>
-
-                <Button
+ -->
+<!--                 <Button
                     android:id="@+id/send_notification_button"
                     style="?android:attr/buttonStyleSmall"            
                     android:layout_width="100dp"
@@ -746,7 +746,7 @@
                     android:layout_margin="5dp"                    
                     android:layout_gravity="center_horizontal"
                     android:text="@string/send_notification_button" />
-
+ -->
             </LinearLayout>
 
         </LinearLayout>

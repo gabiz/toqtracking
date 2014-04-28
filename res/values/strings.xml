@@ -12,12 +12,12 @@
     <string name="events_text">Receive Events:</string>
     <string name="menu_options_text">Menu Options:</string>  
     <string name="divider_text">Show Divider:</string>
-    <string name="notification_panel">Notification</string>
+    <string name="notification_panel"></string>
     <string name="notification_vibe_text">Vibe Alert:</string>   
     <string name="send_notification_button">Send</string>   
-    <string name="doc_panel">Deck Of Cards</string>
-    <string name="doc_header_text">Header:</string>
-    <string name="doc_card1_text">Card #1</string>
+    <string name="doc_panel">Tracking Info</string>
+    <string name="doc_header_text">Emotiv:</string>
+    <string name="doc_card1_text">Emotiv</string>
     <string name="doc_card2_text">Card #2</string>
     <string name="doc_card3_text">Card #3</string> 
     <string name="doc_install_button">Install</string>
